@@ -1,0 +1,237 @@
+\ProvidesPackage{beamerthemeAlvin}[2004/03/27 ver 0.2]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+%%%%%%%%%%%%%%%%%%%%%%% Look des slides %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{soul}
+\RequirePackage{beamerthemeboxes}
+\RequirePackage{wasysym}
+%\definecolor{mygrey}{RGB}{153,153,153}
+\definecolor{mygrey}{RGB}{192,192,192}
+\definecolor{mygreybold}{RGB}{179,179,179}
+\setbeamercolor{block title}{fg=red,bg=mygrey}
+\setbeamercolor{block body}{fg=black,bg=mygrey}
+\setbeamercolor{block title alerted}{fg=red,bg=mygrey}
+\setbeamercolor{block body alerted}{fg=black,bg=mygrey}
+\beamertemplateshadingbackground{white!12}{blue!15}
+%\beamertemplateshadingbackground{white!12}{white!12}
+\newcommand{\whatis}{\small \red{[enseignement]}}
+                                %{white!100}{orange!75!green!35}
+\beamertemplatetransparentcovereddynamic
+%\beamertemplateshadowblocks
+\beamertemplateroundedblocks
+\useframetitletemplate{%
+  \vskip0.25em%
+  {\leftskip-\beamer@leftmargin\advance\leftskip by0.3cm%
+    \rightskip-\beamer@rightmargin plus1fil\advance\rightskip by0.3cm\leavevmode
+     {\color{beamerstructure}
+      \Large\bfseries\Origmath{\underline{\insertframetitle}}} \par}%
+}
+
+% \usefoottemplate{\vbox{{\color{beamerstructure}\textbf{\hfill \insertframenumber / \arabic{LastFrame@beamext}}}%
+%     \vspace{.1cm}%
+%   }}
+
+\usenavigationsymbolstemplate{\vbox{%
+%     \hfill \hfill \hfill \hfill \hfill \hfill \hfill \hfill \hfill \hfill \hfill \hfill
+    \hspace{.75\linewidth}{\whatis}~~~~
+    \hspace{-.05cm}\rlap{\tiny\color{beamerstructure}\textbf{\insertframenumber / \arabic{LastFrame@beamext}}}\qquad
+%    \vspace{.1cm}
+
+  }}
+
+%% \usenavigationsymbolstemplate{
+%%   {\color{beamerstructure}\textbf{\tiny\insertshorttitle~-~\insertshortauthor}}\hfill%
+%%     \hbox{%    
+%%     \hbox{\insertslidenavigationsymbol}
+%%     \hbox{\insertframenavigationsymbol}
+%%     \hbox{\insertsubsectionnavigationsymbol}
+%%     \hbox{\insertsectionnavigationsymbol}
+%%     \hbox{\insertdocnavigationsymbol}
+%%     \hbox{\insertbackfindforwardnavigationsymbol}\qquad
+%%     \rlap{\tiny\color{beamerstructure}\textbf{\insertframenumber / \arabic{LastFrame@beamext}}}\qquad
+%%   }}
+
+ 
+%%%%%%%%%%%%%%%%%%%%%%% Frame numbering %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{LastFrame@beamext}%
+\def\lastframe@putlabel{
+   \immediate\write\@auxout{\string
+%   \newlabel{LastFrame}{{\insertframenumber}{\insertframenumber}}}%
+   \setcounter{LastFrame@beamext}{\insertframenumber}
+}
+}
+\AtEndDocument{%
+   \message{AED: lastpage setting LastFrame}%
+   \clearpage\lastframe@putlabel}%
+
+%%%%%%%%%%%%%%%%%%%%%% block appearance %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\renewcommand{\beamertemplatesetupshadings}{
+  %\beamerboxessetupshadows
+  %\beamerboxesdeclarecolorscheme{block}{structure!75!black}{structure!10!averagebackgroundcolor}
+  %\beamerboxesdeclarecolorscheme{alert}{alert!75!averagebackgroundcolor}{alert!10!averagebackgroundcolor}
+  %\beamerboxesdeclarecolorscheme{example}{beamerexample!75!averagebackgroundcolor}{beamerexample!10!averagebackgroundcolor}
+%}
+
+% For example:
+%% \addheadboxtemplate{\color{black}}{\hfill\tiny\color{white}\textbf{\insertshorttitle}\hskip0.3cm}
+%% \addheadboxtemplate{\color{structure}}{\hskip0.3cm\tiny\color{white}\textbf{\insertshortauthor}}
+
+%% \addfootboxtemplate{\color{black}}{\hfill\tiny\color{white}\textbf{\insertshortinstitute}\hskip0.3cm}
+%% \addfootboxtemplate{\color{structure}}{}
+%% \addfootboxtemplate{\color{black}}{\hfill\tiny\color{white}\textbf{\insertframenumber}\hskip0.3cm}
+
+%%%%%%%%%%%%%%%%%%%%%% Automatic stepping %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{ifthen}
+
+\newcounter{step}
+\setcounter{step}{0}
+\newcommand{\step}[1]{\stepcounter{step}\uncover<\value{step}->{#1}}
+\newcommand{\restep}[1]{#1}
+\let\oldframetitle=\frametitle
+
+%% \newenvironment{stepenumerate}{
+%%   \bgroup
+%%   \def\item{\stepcounter{step}\olditem<\value{step}-> }
+%%   \begin{enumerate}
+%% }{
+%%   \end{enumerate}
+%%   \egroup
+%% }
+%% \renewenvironment{itemize}{
+%% %  \bgroup
+%%   \def\item{\olditem}
+%%   \olditemize
+%% }{
+%%   \oldenditemize
+%% %  \egroup
+%% }
+\newcommand<>{\concept}[1]{{\color#2{red!75!green}#1}}
+\def\beamext@Outline{Outline}
+
+\newcommand{\OutlineName}[1]{\edef\beamext@Outline{#1}}
+\let\oldframetitle=\frametitle
+\renewcommand{\frametitle}[1]{\oldframetitle{#1}\setcounter{step}{0}}
+\renewcommand{\maketitle}{%
+  \frame{\titlepage}
+  \frame{\frametitle{\beamext@Outline}\tableofcontents[pausesections]}
+  % Affichage a chaque section du plan
+  \AtBeginSection[]
+  {
+    \frame<handout:0>
+    {
+      \frametitle{\beamext@Outline}
+      \tableofcontents[current,currentsection]
+    }
+  }
+}
+
+\let\beamext@olditem=\item
+\let\beamext@olditemize=\itemize
+\let\beamext@oldenditemize=\enditemize
+\def\Itemize{\let\item=\beamext@olditem\beamext@olditemize}
+\def\endItemize{\beamext@oldenditemize%
+%  \egroup%
+}
+
+\newenvironment{stepitemize}{
+  \begin{itemize}
+    \renewcommand{\item}[1][]{%
+      \stepcounter{step}%
+      \ifthenelse{\equal{##1}{}}{\beamext@olditem<\value{step}->}{\beamext@olditem<\value{step}->[##1]}}%
+  }{%
+  \end{itemize}
+}
+
+%% \newenvironment{stepitemize}{
+%%   \begin{itemize}
+%%     \let\olditem=\item%
+%%     \renewcommand{\item}[1][]{%
+%%       \stepcounter{step}%
+%%       \ifthenelse{\equal{##1}{}}{\olditem<\value{step}->}{\olditem<\value{step}->[##1]}}%
+%%   }{%
+%%   \end{itemize}
+%% }
+
+% \newenvironment{stepdescription}{
+%   \begin{description}
+%     \let\olditem=\item%
+%     \renewcommand{\item}[1][]{%
+%       \stepcounter{step}%
+%       \ifthenelse{\equal{##1}{}}{\olditem<\value{step}->}{\olditem<\value{step}->[##1]}}%
+%   }{
+%   \end{description}
+% }
+
+
+\newenvironment{stepdescription}{
+  \begin{description}
+    \renewcommand{\item}[1][]{%
+      \stepcounter{step}%
+      \beamext@olditem<\value{step}->[##1]}%
+  }{%
+  \end{description}
+}
+
+
+\newcommand{\IfActive}[1]{\only<\value{step}->{#1}}
+\newcommand{\BeforeActivation}[1]{\temporal<\value{step}>{#1}{}{}}
+\newcommand{\AtActivation}[1]{\only<\value{step}>{#1}}
+\newcommand{\AfterActivation}[1]{\temporal<\value{step}>{}{}{#1}}
+
+\usedescriptionitemofwidthas{bl}
+%%%% Pour annuler le raggedright introduit dans powersem...
+\def\slide@rightskip{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Maths stuff %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewenvironment{definition}[1][]{
+  \begin{alertblock}{\iflanguage{english}{Definition}{Définition}%
+         \ifthenelse{\equal{#1}{}}{}{ (\origmath{\text{#1}})}.}%
+%        \expandafter\everymath\expandafter{\the\everymath}
+  }{
+  \end{alertblock}
+}
+
+\renewenvironment{theorem}[1][]{
+  \begin{block}{\iflanguage{english}{Theorem}{Théorème}%
+                \ifthenelse{\equal{#1}{}}{}{ ({#1})}.}%
+  }{
+  \end{block}
+}
+
+\renewenvironment{lemma}[1][]{
+  \begin{block}{\iflanguage{english}{Lemma}{Lemme}%
+                \ifthenelse{\equal{#1}{}}{}{ ({#1})}.}%
+  }{
+  \end{block}
+}
+
+\newboolean{nocolor@beamext}
+\setboolean{nocolor@beamext}{false}
+\DeclareOption{nocolor}{\setboolean{nocolor@beamext}{true}}
+
+\ProcessOptions
+
+\ifthenelse{\boolean{nocolor@beamext}}{%
+  \newcommand{\origmath}[1]{\ensuremath{#1}}%
+  \newcommand{\Origmath}[1]{#1}%
+}{
+  \expandafter\everymath\expandafter{\the\everymath\color{blue!50!black!100}}% 
+  \newcommand{\origmath}[1]{{\everymath{}\ensuremath{\everymath{}#1}}}%
+  \newcommand{\Origmath}[1]{{\everymath{}#1}}%
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% pour Yves
+
+\def\smiley{\green{\larger[2]\wasyfamily\char44}\xspace}
+\def\frownie{\blue{\larger[2]\wasyfamily\char47}\xspace}
+
+
+
+\newcommand<>{\blue}[1]{{\color#2{blue!100!black!100}#1}}
+\newcommand<>{\red}[1]{{\color#2{red!75!red!100!black!100}#1}}
+\newcommand<>{\green}[1]{{\color#2{green!75!red!100!black!200}#1}}
+\endinput
+
+
+

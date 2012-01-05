@@ -1,0 +1,170 @@
+\def\raggedright{}
+%\documentclass[mathserif,hyperref={pdfpagemode=FullScreen}]{beamer}
+\documentclass[mathserif]{beamer}
+%\documentclass[mathserif]{beamer}
+
+\usetheme{340}
+
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+
+
+\def\beginsectiontitle{Plan de l'expos\'{e}}
+
+\def\bib[#1] {\smallskip\noindent\hangindent 10pt\hbox to10pt{#1\hfil}}
+
+% %%%%%%%%%%%%%%%%%%%%%%% Convenient commands %%%%%%%%%%%%%%%%%%%%%%%
+% \newcommand<>{\concept}[1]{{\color#2{red!75!green}#1}}
+% \newcommand<>{\code}[1]{{\color#2{green!75!red!100!black!250}\texttt{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%% Packages utiles %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage[nocolor,noborder]{pdfswitch}
+\usepackage{texgraphicx}
+%\usepackage{alvingraphicx}
+\graphicspath{{fig/}}
+\usepackage{amsfonts,amsmath,amssymb}
+\usepackage{enumerate}
+\usepackage{url}\urlstyle{sf}
+\usepackage{xspace}
+\usepackage{relsize}
+\usepackage{enumerate}
+\usepackage{figlatex}
+\usepackage{alvingraphicx}
+
+
+\def\mbold{\mathversion{bold}}
+\def\mnorm{\mathversion{normal}}
+\def\clap#1{\hbox{{\setbox0=\vbox{#1}\copy0\kern-.5\wd0}}}
+\def\Clap#1{\makebox(0,0)[b]{\smash{#1}}}
+\def\L{\ensuremath{\mathcal{L}}\xspace}%
+\def\R{\ensuremath{\mathcal{R}}\xspace}%
+
+\newcommand{\cons}[1]{\ensuremath{\mathit{cons}(P_{#1})}\xspace}
+\newcommand{\sent}[2]{\ensuremath{\mathit{sent}(P_{#1}\to P_{#2})}\xspace}
+\newcommand{\link}[2]{\ensuremath{P_{#1}\rightarrow P_{#2}}}  
+\newcommand{\A}[1]{\ensuremath{\mathcal{A}_{#1}}\xspace}  
+
+%%%%%%%%%%%%%%%%%%%% des d\'{e}limiteurs sp\'{e}ciaux %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\let\leq=\leqslant
+\let\geq=\geqslant
+\let\epsilon=\varepsilon
+\DeclareMathOperator{\argmin}{\text{argmin}}
+\DeclareMathOperator{\argmax}{\text{argmax}}
+\def\lb{\ensuremath{\llbracket}}  % gr\^{a}ce \`{a} stmaryrd
+\def\rb{\ensuremath{\rrbracket}}  % gr\^{a}ce \`{a} stmaryrd
+\def\clap#1{\hbox{{\setbox0=\vbox{#1}\copy0\kern-.5\wd0}}}
+
+\def\smiley{\concept{\larger[3]\wasyfamily\char44}}
+\def\frownie{\concept{\larger[3]\wasyfamily\char47}}
+
+\newcommand<>{\blue}[1]{{\color#2{blue!100!black!100}#1}}
+\newcommand<>{\red}[1]{{\color#2{red!75!red!100!black!100}#1}}
+\newcommand<>{\green}[1]{{\color#2{green!70!black}#1}}
+
+\newcommand<>{\lgray}[1]{{\color#2{white!70!black}#1}}
+
+\newcommand<>{\lred}[1]{{\color#2{red!100!black!75}#1}}
+
+
+\newcommand<>{\purple}[1]{{\color#2{blue!50!red}#1}} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hypersetup{%
+ pdftitle={Coding Dojo},
+ pdfauthor={Antoine Vernois}
+}
+
+\newcommand{\ignore}[1]{}
+
+
+\title{Software Craftsmanship}
+
+\author[antoine@crafting-labs.fr]{Antoine Vernois}
+\date{5 janvier 2012}
+
+
+
+
+\begin{document}
+
+\maketitle
+
+\frame{
+    \frametitle{Constat}
+    \begin{block}{}
+
+        Si je veux apprendre le Judo, je vais m'inscrire au dojo du coin et y passer une heure par semaine pendant deux ans, au bout de quoi j'aurai peut-\^{e}tre envie de pratiquer plus assid\^{u}ment.
+ 
+        Si je veux apprendre la programmation objet, mon employeur va me trouver une formation de trois jours \`{a} Java dans le catalogue 2004.
+
+        Cherchez l'erreur.
+        \newline
+        \vfill -- \textit{Laurent Bossavit (2004)}
+    \end{block} 
+
+}
+
+\frame{
+    \frametitle{Un espace d'\'{e}change}
+    \begin{block}{l'idée c'est}
+        \begin{itemize}
+            
+            \item un lieu de partage
+            \item un lieu d'exp\'{e}rimentation
+            \item un lieu de pratique
+            \item un lieu d'apprentissage
+        \end{itemize}
+    \end{block} 
+    
+    \begin{block}{mais \c{c}a n'est pas}
+        \begin{itemize}
+            \item un prof qui dispense la bonne parole
+            \item une formation passive
+        \end{itemize}
+    \end{block} 
+}
+
+\frame{
+    \frametitle{les th\`{e}mes abord\'{e}s}
+    \begin{block}{des techniques}
+        \begin{itemize}
+            \item des algos
+            \item des patterns
+            \item de la conception
+        \end{itemize}
+    \end{block}
+    \begin{block}{des pratiques}
+        \begin{itemize}
+            \item pair programing
+            \item TDD
+            \item BDD, ATDD
+            \item conception \'{e}mergente
+        \end{itemize}
+    \end{block}
+}
+
+\frame{
+    \frametitle{des formats}
+
+    \begin{block}{}
+        
+	    \begin{itemize}
+		\item coding dojo
+                \item code retreat
+                \item courtes présentations
+                \item code \& breakfast
+                \item ... 
+	    \end{itemize}
+    \end{block}
+}
+
+
+\frame{
+    \frametitle{y'a plus qu'\`{a} !}
+    \begin{block}{}
+       \center{ Y'a plus qu'\`{a} !}
+    \end{block}
+}
+
+\end{document}

@@ -1,0 +1,112 @@
+%%%%%%%%%%%%%%%%%% Gestion du style des figures par Alvin %%%%%%%%%%%%%%%%%%%%
+% Petit package pour inclure facilement des figures
+% Arnaud Legrand. 2001
+% E-mail Arnaud.Legrand@ens-lyon.fr
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{alvingraphicx}
+\typeout{Document alvingraphicx' : Gestion des figures par Alvin}
+
+%% Le minimum vital...
+%\RequirePackage[latin1]{inputenc}
+%\RequirePackage[T1]{fontenc}
+
+%% Des trucs quasiment indispensables...
+%\RequirePackage{amsfonts,amsmath,amsthm,amssymb,stmaryrd}
+%\RequirePackage{fullpage}
+%\RequirePackage{enumerate}
+%\RequirePackage{algo}
+%\RequirePackage{subfigure}
+
+% La gestion des figures
+%\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{graphicx}}
+%\RequirePackage[dvips]{graphicx}
+\ProcessOptions\relax
+
+%\RequirePackage[pdftex]{graphicx}
+\RequirePackage{ifthen}
+\RequirePackage{color}
+
+\graphicspath{{fig/}}
+\def\input@path{{fig/}}
+
+\newboolean{PsTex@Args}
+\newboolean{PsTex@Args@width}
+\newboolean{PsTex@Args@height}
+\newboolean{PsTex@Args@scale}
+
+\define@key{PsTex}{width}{%
+  \def\PsTex@width{#1}%
+  \setboolean{PsTex@Args}{true}%
+  \setboolean{PsTex@Args@width}{true}}%
+\define@key{PsTex}{height}{%
+  \def\PsTex@height{#1}%
+  \setboolean{PsTex@Args}{true}%
+  \setboolean{PsTex@Args@height}{true}}%
+\define@key{PsTex}{scale}{%
+  \def\PsTex@scale{#1}%
+  \setboolean{PsTex@Args}{true}%
+  \setboolean{PsTex@Args@scale}{true}%
+}%
+
+\newcommand{\includepstex}[2][]{%
+  \setboolean{PsTex@Args@scale}{false}%
+  \setboolean{PsTex@Args@width}{false}%
+  \setboolean{PsTex@Args@height}{false}%
+  \setboolean{PsTex@Args}{false}%
+  \def\PsTex@width{!}%
+  \def\PsTex@height{!}%
+  \def\PsTex@scale{1}%
+  \setkeys{PsTex}{#1}%
+  \ifthenelse{\boolean{PsTex@Args}}{%
+%     \texttt{scalebox\{\PsTex@scale\}\{resizebox\{\PsTex@width\}\{\PsTex@height\}%
+%       \{input\{#2.pstex\_t\}\}\}}%
+%    \scalebox{\PsTex@scale}{\resizebox{\PsTex@width}{\PsTex@height}{\input{#2.pstex_t}}}%
+    \ifthenelse{\boolean{PsTex@Args@scale}}{%
+      \scalebox{\PsTex@scale}{\input{#2.pdftex_t}}%
+    }{%
+    }%
+    \ifthenelse{\boolean{PsTex@Args@height}}{%
+      \resizebox{!}{\PsTex@height}{\input{#2.pdftex_t}}%
+    }{%
+    }%
+    \ifthenelse{\boolean{PsTex@Args@width}}{%
+%      \parbox{\PsTex@width}{\resizebox{\linewidth}{!}{\input{#2.pstex_t}}}%
+      \resizebox{\PsTex@width}{!}{\input{#2.pdftex_t}}%
+    }{%
+    }%
+  }{%
+    \input{#2.pdftex}%
+  }%
+}
+
+% \define@key{PsTex}{width}{\def\PsTex@width{#1}\setboolean{PsTex@Args}{true}}
+% \newboolean{PsTex@Args}
+% \newcommand{\includepstex}[2][]{
+%   \setboolean{PsTex@Args}{false}
+%   \setkeys{PsTex}{#1} 
+%   \ifthenelse{\boolean{PsTex@Args}}{
+%     \parbox{\PsTex@width}{\resizebox{\linewidth}{!}{\input{#2.pstex_t}}}
+%   }{
+%     \input{#2.pstex_t}
+%   }
+% }
+
+%\newcommand{\includempost}[2]{\includegraphics[#1]{#2.mpeps}}
+\newcommand{\includempost}[2][]{%
+  \setboolean{PsTex@Args}{false}%
+  \setkeys{PsTex}{#1}%
+  \ifthenelse{\boolean{PsTex@Args}}{%
+    \includegraphics[#1]{#2.mpeps}%
+  }{%
+    \includegraphics[#1]{#2.mpeps}%
+  }%
+}%
+
+% Définitions courrament utilisées dans les figures
+% utile pour les dessins...
+\def\accolade#1{$\left\{\begin{array}{c}\vspace{#1}\end{array}\right.$}%
+\def\parenthese#1{$\left(\begin{array}{c}\vspace{#1}\end{array}\right.$}%
+\def\dotline#1{{\hbox to #1 {\dotfill}}}%
+
+\endinput

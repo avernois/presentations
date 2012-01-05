@@ -1,0 +1,53 @@
+\ProvidesPackage{beamertheme340}
+
+% Copyright 2004 by Manuel Carro <mcarro@fi.upm.es>
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\mode<presentation>
+
+% texte grisé dans les item !
+\beamertemplatetransparentcovereddynamic
+
+\beamertemplateshadingbackground{orange!12}{blue!15}
+
+\usecolortheme{340}
+
+\useoutertheme{340}
+
+\setbeamercolor{title}{use=structure,fg=white,bg=structure.fg}
+
+\useinnertheme[shadow]{rounded}
+
+\usecolortheme{340}
+
+% Tills' opinion: should be done in an inner theme, not here.
+
+\usesubitemizeitemtemplate{%
+    \tiny\raise1.5pt\hbox{\color{beamerstructure}$\blacktriangleright$}%
+}
+\usesubsubitemizeitemtemplate{%
+    \tiny\raise1.5pt\hbox{\color{beamerstructure}$\bigstar$}%
+}
+
+\setbeamersize{text margin left=1.5em,text margin right=2em}
+
+\setbeamertemplate{background canvas}[vertical shading][bottom=white!10,top=blue!10]
+\newcommand{\cframe}[1]{\frame[label=current]{#1}}%
+
+\usenavigationsymbolstemplate{}
+
+		      
+% Affichage a chaque section du plan
+%% \AtBeginSection[]
+%% {
+%%   \frame<handout:0>
+%%   {
+%%     \frametitle{Plan de l'expos\'{e}}
+%%     \tableofcontents[current,hidesubsections]
+%%   }
+%% }
+\mode
+<all>
+
